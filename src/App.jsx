@@ -1,5 +1,11 @@
-import { useState, useEffect } from 'react'
+import GoogleReviews from './GoogleReviews'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import './App.css'
+
 
 const SERVICES = [
   { label: 'Corte Unisex' },
@@ -18,37 +24,22 @@ const IMAGES = [
 ]
 
 function Gallery() {
-  const [active, setActive] = useState(0)
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActive(prev => (prev + 1) % IMAGES.length)
-    }, 3500)
-    return () => clearInterval(id)
-  }, [])
-
   return (
-    <section className="gallery" id="galeria">
-      <div className="gallery__main">
+    <section id="galeria" className="gallery-carousel">
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay]}
+        navigation
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        loop
+        className="gallery-swiper"
+      >
         {IMAGES.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt={`Arte Urbano ${i + 1}`}
-            className={`gallery__img ${i === active ? 'gallery__img--active' : ''}`}
-          />
+          <SwiperSlide key={src}>
+            <img src={src} alt={`Arte Urbano ${i + 1}`} className="gallery-swiper__img" />
+          </SwiperSlide>
         ))}
-      </div>
-      <div className="gallery__dots">
-        {IMAGES.map((_, i) => (
-          <button
-            key={i}
-            className={`gallery__dot ${i === active ? 'gallery__dot--active' : ''}`}
-            onClick={() => setActive(i)}
-            aria-label={`Imagen ${i + 1}`}
-          />
-        ))}
-      </div>
+      </Swiper>
     </section>
   )
 }
@@ -108,6 +99,50 @@ export default function App() {
         <Gallery />
       </div>
 
+      {/* MAPA */}
+      <section className="map-section" id="ubicacion">
+        <div className="reviews__header">
+          <h2 className="section-title">Ubicación</h2>
+          <a
+            href="https://maps.app.goo.gl/GWCKht4qKUH2isnU6"
+            className="reviews__cta"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style={{ flexShrink: 0 }}>
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            Ver en Google Maps
+          </a>
+        </div>
+        <div className="reviews__map">
+          <iframe
+            title="Arte Urbano en Google Maps"
+            src="https://maps.google.com/maps?q=La+Rioja+1731,Buenos+Aires,Argentina&output=embed&hl=es&z=16"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </section>
+
+      {/* RESEÑAS */}
+      <section className="reviews" id="resenas">
+        <h2 className="section-title">Reseñas</h2>
+        <GoogleReviews />
+        <a
+          href="https://maps.app.goo.gl/GWCKht4qKUH2isnU6"
+          className="reviews__leave"
+          target="_blank"
+          rel="noreferrer"
+        >
+          ★ Dejá tu reseña en Google
+        </a>
+      </section>
+
       {/* CONTACT */}
       <section className="contact" id="contacto">
         <h2 className="section-title">Turnos</h2>
@@ -130,7 +165,7 @@ export default function App() {
           <div className="contact__block">
             <p className="contact__label">Dirección</p>
             <a
-              href="https://maps.google.com/?q=La+Rioja+1731,Buenos+Aires"
+              href="https://maps.app.goo.gl/qAEGgNQXj9NfrMyu7"
               className="contact__value"
               target="_blank"
               rel="noreferrer"
@@ -143,6 +178,18 @@ export default function App() {
 
       {/* FOOTER */}
       <footer className="footer">
+        <a
+          href="https://www.instagram.com/arte_urbano1981/"
+          className="footer__ig"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Instagram"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+          @arte_urbano1981
+        </a>
         <p>© {new Date().getFullYear()} Arte Urbano · Todos los derechos reservados</p>
       </footer>
 
