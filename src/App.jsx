@@ -9,9 +9,11 @@ import './App.css'
 
 const SERVICES = [
   { label: 'Corte Unisex' },
+  { label: 'Barbería' },
   { label: 'Alisados' },
   { label: 'Shock de Keratina' },
   { label: 'Color' },
+  { label: 'Balayage' },
   { label: 'Peinados' },
 ]
 
@@ -148,10 +150,6 @@ export default function App() {
         <h2 className="section-title">Turnos</h2>
         <div className="contact__grid">
           <div className="contact__block">
-            <p className="contact__label">Teléfono</p>
-            <a href="tel:21184837" className="contact__value">2118-4837</a>
-          </div>
-          <div className="contact__block">
             <p className="contact__label">WhatsApp</p>
             <a
               href="https://wa.me/541132775631"
@@ -170,7 +168,7 @@ export default function App() {
               target="_blank"
               rel="noreferrer"
             >
-              La Rioja 1731<br />Buenos Aires, Argentina 1244
+              La Rioja 1731<br />Parque Patricios - CABA
             </a>
           </div>
         </div>
@@ -191,6 +189,7 @@ export default function App() {
           @arte_urbano1981
         </a>
         <p>© {new Date().getFullYear()} Arte Urbano · Todos los derechos reservados</p>
+        <p>Desarrollado por <a href="https://salvadorcastro.vercel.app/" target="_blank" rel="noreferrer">salvaCastro</a></p>
       </footer>
 
       {/* WHATSAPP FLOAT */}
